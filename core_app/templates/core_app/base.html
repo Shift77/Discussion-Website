@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}{% endblock %} | Forum</title>
+</head>
+<body>
+    <nav class="grid grid-cols-10 my-4">
+        <div class="col-span-1 px-4 py-2">
+            <a href="">
+            <h2 class="font-semibold mt-3 text-2xl ">Forum</h2>
+            </a>
+        </div>
+
+        <div class="col-span-7 ml-28 my-2">
+            <form action="">
+                <div class="flex justify-center space-x-1">
+                <input type="text" placeholder="Search . . ." class="mt-3 shadow-md px-4 w-full border rounded-full py-2 font-medium">
+                <button class="bg-cyan-500 mt-3 hover:bg-cyan-400 text-white rounded-full w-10 h-10 text-md shadow-md items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-7 h-7 pl-1 ">
+                        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                    </svg>             
+                </button>
+                </div>
+            </form>    
+        </div>
+        {% if user.is_authenticated %}
+        <div class="col-end-12 px-4 py-2 space-x-3">
+            <div class=" flex justify-center gap-3">
+                <div class="relative">
+                <button class="block h-14 w-14 focus:border-gray-200 focus:border-2 overflow-hidden focus:outline-none rounded-full">
+                    <img src="{{ user.userprofile.avatar.url }}" alt="{{user.username.0}}" class="object-cover w-full h-full shadow-lg  text-start text-xl">
+                </button>
+
+                </div>
+                    <a href="{% url 'core_app:logout' %}" class="font-semibold mt-3 text-lg h-10 w-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                          </svg>                                            
+                        </a>
+                   
+                
+            
+        </div>
+
+        {% else %}
+        <div class="col-end-12 px-4 py-2 space-x-3">
+            <a href="{% url 'core_app:login' %}" class="font-semibold text-lg">
+                Login
+            </a>
+            <a href="{% url 'core_app:signup' %}" class="font-semibold text-lg">
+                Signup
+            </a>
+        </div>
+
+        {% endif %}
+    </nav>
+    <hr>
+
+    {% block content %}
+
+    {% endblock %}
+    
+</body>
+</html>

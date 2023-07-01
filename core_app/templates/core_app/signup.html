@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Sign Up | Forum</title>
+</head>
+<body>
+    <nav class="flex justify-between">
+        <div class="font-semibold text-3xl px-10 py-10">Forum</div>
+        <div class="px-10 py-10">
+            <h2 class="font-thin">Already have an account?  <a href="{% url 'core_app:login' %}" class="font-semibold underline hover:text-green-500">Log in</a></h2>
+        </div>
+    </nav>
+    <div class="flex justify-center my-5 mx-44 rounded-xl bg-gray-100">
+        <div class="grid grid-cols-1">
+        <div>
+            <h1 class="font-semibold text-4xl my-3">Sign Up</h1>
+        </div>
+        <hr>
+        <div class="w-full">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="font-semibold inline-block mt-4 mb-2">User Name</label>
+                    <br>
+                    {{form.username}}
+                </div>
+                
+                <div class="mb-3">
+                    <label class="font-semibold inline-block mb-2">Email</label>
+                    <br>
+                    {{form.email}}
+                </div>
+                <div class="mb-3">
+                    <label class="font-semibold inline-block mb-2">Password</label>
+                    <br>
+                    {{form.password1}}
+                </div>
+                <div class="mb-3">
+                    <label class="font-semibold inline-block mb-2">Confirm Password</label>
+                    <br>
+                    {{form.password2}}
+                </div>
+                
+                <div class="mb-3">
+                    <label class="font-semibold inline-block mb-2">Biography</label>
+                    <br>
+                    {{profile_form.biography}}
+                </div>
+                <hr class="my-3 border-1 border-pink-300">
+                <div class="mb-3">
+                    <label class="font-semibold inline-block mb-2">choose Your Profile Picture</label>
+                    <br>
+                    {{profile_form.avatar}}
+                </div>
+    
+    
+                {% if form.errors or form.non_field_error %}
+                    <div class="mb-3 p-6 bg-red-500 rounded-xl">
+                        {% for field in form %}
+                        
+                            {{field.errors}}
+                        
+                        {% endfor %}
+                        
+                        {{ form.non_field_error}}
+                    </div>
+                {% endif %}
+    
+                <button class="rounded-xl bg-teal-500 px-8 py-2 font-semibold hover:bg-teal-600 text-white">Submit</button>
+                
+
+                
+
+            </form>
+        </div>
+    </div>
+    </div>
+
+    </body>
+</html>
