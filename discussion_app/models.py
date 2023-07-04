@@ -8,6 +8,7 @@ class Category(models.Model):
     
     name = models.CharField(max_length=255)
     
+    logo = models.ImageField(upload_to='post_logos/', blank=True, null=True)
     
     class Meta:
         verbose_name_plural = 'Categories'

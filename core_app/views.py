@@ -1,9 +1,16 @@
 from django.shortcuts import render
 from . import forms
 from django.shortcuts import redirect
+from discussion_app.models import Post
 # Create your views here.
 
 def index(request):
+    
+    posts = Post.objects.all()
+    
+    context = {
+        'posts': posts,
+    }
     
     return render(request, 'core_app/index.html')
 
