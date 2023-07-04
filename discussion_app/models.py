@@ -16,11 +16,13 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
-class Topic(models.Model):
+class Post(models.Model):
     
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    likes = models.ManyToManyField(User, related_name='post_likes')
     
     title = models.CharField(max_length=300)
     
@@ -35,9 +37,11 @@ class Topic(models.Model):
 
 class Message(models.Model):
     
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Post, on_delete=models.CASCADE)
     
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    likes = models.ManyToManyField(User, related_name='message_likes')
     
     content = models.TextField(max_length=1000)
     
@@ -53,6 +57,8 @@ class Reply(models.Model):
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    likes = models.ManyToManyField(User, related_name='reply_likes')
     
     content = models.TextField(max_length=1000)
     
