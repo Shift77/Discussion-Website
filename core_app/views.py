@@ -1,18 +1,18 @@
 from django.shortcuts import render
 from . import forms
 from django.shortcuts import redirect
-from discussion_app.models import Post
+from discussion_app.models import Post, Category
 # Create your views here.
 
 def index(request):
     
-    posts = Post.objects.all()
+    categories = Category.objects.all()
     
     context = {
-        'posts': posts,
+        'categories': categories,
     }
     
-    return render(request, 'core_app/index.html')
+    return render(request, 'core_app/index.html', context)
 
 def signup(request):
     

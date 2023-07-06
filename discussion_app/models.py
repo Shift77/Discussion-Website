@@ -19,7 +19,7 @@ class Category(models.Model):
     
 class Post(models.Model):
     
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='post_category')
     
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     
