@@ -1,0 +1,88 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}{{category.name}}{% endblock %}
+
+{% block content %}
+
+    <div class="grid grid-cols-1 mx-20 my-10">
+
+        <div class="flex justify-center bg-white m-7 overflow-hidden rounded-3xl shadow-2xl border border-gray-400">
+            <div class="relative h-32  m-6 rounded-3xl shadow-lg w-full ">
+                <img class="w-full h-32 rounded-2xl" src="{{category.logo.url}}" alt="category name">
+                <h1 class="absolute left-[100px] bottom-[40px] font-semibold text-[35px] text-white">{{category.name | upper}}</h1>
+            </div>
+        </div>
+        
+<div class="relative overflow-x-auto mt-4">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs font-extralight text-gray-300">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    TOPIC
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    USERS
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    REPLIES
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    VIEWS
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Apple MacBook Pro 17"
+                </th>
+                <td class="px-6 py-4">
+                    Silver
+                </td>
+                <td class="px-6 py-4">
+                    Laptop
+                </td>
+                <td class="px-6 py-4">
+                    $2999
+                </td>
+            </tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Microsoft Surface Pro
+                </th>
+                <td class="px-6 py-4">
+                    White
+                </td>
+                <td class="px-6 py-4">
+                    Laptop PC
+                </td>
+                <td class="px-6 py-4">
+                    $1999
+                </td>
+            </tr>
+            <tr class="bg-white dark:bg-gray-800">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Magic Mouse 2
+                </th>
+                <td class="px-6 py-4">
+                    Black
+                </td>
+                <td class="px-6 py-4">
+                    Accessories
+                </td>
+                <td class="px-6 py-4">
+                    $99
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+        {% for post in category.post_category.all %}
+            <h1 class="p-10 font-semibold text-lg inline-block">{{post}}</h1>
+        {% endfor %}
+    </div>
+    
+
+{% endblock %}
+

@@ -8,8 +8,8 @@
 
         <div class="grid grid-cols-3 gap-8 px-20 ">
             {% for category in categories %}
-            
-            <div class="relative max-w-sm bg-white border border-gray-200 rounded-3xl shadow-xl dark:bg-gray-800 dark:border-gray-700">
+            <a href="{% url 'discussion_app:category_detail' category.id %}">
+            <div class="relative transform hover:scale-110 hover:border-rose-600 hover:shadow-xl transition-all max-w-sm bg-white border border-gray-200 rounded-3xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
                 <div class=" px-8 pt-12 rounded-3xl h-40">
                     <img class=" relative w-full h-20 rounded-3xl shadow-lg" src="{{category.logo.url}}" alt="" />
                     <h1 class="absolute left-[65px] top-[70px] text-white font-semibold text-xl">{{category.name | upper}}</h1>
@@ -25,11 +25,13 @@
                     <h1 class="font-normal text-xs mb-2  text-gray-400 ">LAST POST</h1>
                     <div class="col-span-2 mb-6 flex items-center">
                         <img class="h-10 w-10 rounded-full object-cover shadow-lg" src="{{category.post_category.last.author.userprofile.avatar.url}}" alt="">
-                        <h1 class="font-semibold text-sm text-ellipsis">{{category.post_category.last.title}}</h1>
+                        <h1 class="font-semibold text-sm pl-1 text-ellipsis">{{category.post_category.last.title}}</h1>
                     </div>
     
                 </div>
+            
             </div>
+            </a>
             {% endfor %}
 
         </div>
