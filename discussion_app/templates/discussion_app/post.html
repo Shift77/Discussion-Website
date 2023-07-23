@@ -1,0 +1,59 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}POST{% endblock %}
+
+{% block content %}
+
+<div class="w-full inline-flex mt-10">
+
+    <div class="w-2/5 items-center mx-5 rounded-2xl px-12 py-5 bg-blue-500 text-white">
+
+        <div class="font-semibold text-2xl break-words ">
+            {{post.title}}
+        </div>
+
+        <div class="pt-10 inline-flex">
+            <img class="h-10 w-10 rounded-full" src="{{post.author.userprofile.avatar.url}}" alt="img">
+            <h1 class="pl-5 pt-2 font-semibold">{{post.author.username | capfirst}}</h1>
+        </div>
+
+        <div class="pt-10">
+            {{post.content}}
+        </div>
+
+        
+        <div class="flex flex-col ">
+            <div class="sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                <div class="">
+                  <table class="min-w-full text-center text-sm font-light">
+                    <thead class="">
+                      <tr class="text-white text-opacity-70">
+                        <th scope="col" class="px-6 py-4 font-light">REPLIES</th>
+                        <th scope="col" class="px-6 py-4 font-light">VIEWS</th>
+                        <th scope="col" class="px-6 py-4 font-light">LIKES</th>
+                        <th scope="col" class="px-6 py-4 font-light">LAST REPLY</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="text-white font-medium overflow-x-hidden">
+                        <td class="whitespace-nowrap px-6 ">{{post.message_post.count}}</td>
+                        <td class="whitespace-nowrap px-6 ">121</td>
+                        <td class="whitespace-nowrap px-6 ">{{post.likes.count}}</td>
+                        <td class="whitespace-nowrap px-6 ">{{post.message_post.last.creation_date}}</td>
+                      </tr>
+                        </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+    <div class="bg-red-50 items-center mx-5 rounded-2xl px-12 py-5">
+        test
+    </div>
+</div>
+
+{% endblock %}
