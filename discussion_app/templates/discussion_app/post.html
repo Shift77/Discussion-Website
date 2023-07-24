@@ -6,7 +6,7 @@
 
 <div class="w-full inline-flex mt-10">
 
-    <div class="w-2/5 items-center mx-5 rounded-2xl px-12 py-5 bg-blue-500 text-white">
+    <div class="w-2/5 items-center mx-5 rounded-2xl px-12 py-5 bg-blue-700 text-white">
 
         <div class="font-semibold text-2xl break-words ">
             {{post.title}}
@@ -38,7 +38,7 @@
                     <tbody>
                       <tr class="text-white font-medium overflow-x-hidden">
                         <td class="whitespace-nowrap px-6 ">{{post.message_post.count}}</td>
-                        <td class="whitespace-nowrap px-6 ">121</td>
+                        <td class="whitespace-nowrap px-6 ">{{post.views}}</td>
                         <td class="whitespace-nowrap px-6 ">{{post.likes.count}}</td>
                         <td class="whitespace-nowrap px-6 ">{{post.message_post.last.creation_date}}</td>
                       </tr>
@@ -48,11 +48,57 @@
               </div>
             </div>
           </div>
-
+          <div class="inline-flex pt-10 gap-2">
+          {% for user in post.involved_users.0 %}
+                                    
+            <img class="h-10 w-10 rounded-full object-cover " src="{{user.userprofile.avatar.url}}" alt="">
+                                
+          {% endfor %}
+          </div>
     </div>
 
-    <div class="bg-red-50 items-center mx-5 rounded-2xl px-12 py-5">
-        test
+    <div class=" items-center mx-5 rounded-2xl px-12 py-5">
+      {% for message in post.message_post.all %}
+        {% if message.is_parent %}
+        <div class="pb-10">
+          <div class="inline-flex gap-2">
+            <img class="h-10 w-10 rounded-full object-cover " src="{{message.author.userprofile.avatar.url}}" alt="">
+            <div class="inline-block">
+              <div class="font-semibold text-black">
+                {{message.author}}
+              </div>
+              <div class="font-light text-gray-400">
+              {{message.creation_date}}
+              </div>
+            </div>
+          </div>
+          <div class="text-black text-opacity-70 pt-3">
+            {{message.content}}
+          </div>
+        </div>  
+        {% endif %}
+        <div class="pl-10">
+          {% for reply in message.children %}
+          <div class="pb-10">
+            <div class="inline-flex gap-2">
+              <img class="h-10 w-10 rounded-full object-cover " src="{{reply.author.userprofile.avatar.url}}" alt="">
+              <div class="inline-block">
+                <div class="font-semibold text-black">
+                  {{reply.author}}
+                </div>
+                <div class="font-light text-gray-400">
+                {{reply.creation_date}}
+                </div>
+              </div>
+            </div>
+            <div class="text-black text-opacity-70 pt-3">
+              {{reply.content}}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+                          
+      {% endfor %}
     </div>
 </div>
 

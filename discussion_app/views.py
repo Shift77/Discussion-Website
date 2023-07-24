@@ -22,6 +22,9 @@ def post_detail(request, id):
     
     post = get_object_or_404(models.Post, id=id)
     
+    post.views += 1
+    post.save()
+    
     context = {
         'post':post
     }
