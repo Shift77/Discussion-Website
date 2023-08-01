@@ -82,7 +82,7 @@
       <div>
         <form action="" method="post">
           {% csrf_token %}
-
+          {{message_form.submit_message}}
           {{message_form.content}}
           <br>
           <button type="submit" class="bg-blue-500 p-4 text-xl font-semibold ml-2 rounded-xl text-white">Post</button>
@@ -107,7 +107,20 @@
             {{message.content}}
           </div>
         </div>  
+        
+        <div class=" items-center rounded-2xl py-5">
+          <div>
+            <form action="" method="post">
+              {% csrf_token %}
+              {{reply_form.submit_reply}}
+              {{reply_form.content}}
+              <br>
+              <button name="reply_form" value="{{ message.id }}" type="submit" class="bg-blue-500 p-4 text-xl font-semibold ml-2 rounded-xl text-white">Reply</button>
+            </form>
+          </div>
+        
         {% endif %}
+        
         <div class="pl-10">
           {% for reply in message.children %}
           <div class="pb-10">

@@ -28,16 +28,37 @@ def post_detail(request, id):
     
     is_liked = post.likes.filter(id=request.user.id).exists()
     
+    message_form = forms.MessageForm
+    reply_form = forms.ReplyForm 
+    
     if request.method == 'POST':
-        message_form = forms.MessageForm(request.POST)
         
-        if message_form.is_valid() and request.user.is_authenticated:
+        if 'submit_message' in request.POST:
+            message_form = forms.MessageForm(request.POST)
+            
+            if message_form.is_valid() and request.user.is_authenticated:
+            
+                message_form.instance.author = request.user
+                message_form.instance.post = post
+                message_form.save()
         
-            message_form.instance.author = request.user
-            message_form.instance.post = post
-            message_form.save()
-    else:
-        message_form = forms.MessageForm
+        if 'submit_reply' in request.POST:
+            reply_form = forms.ReplyForm(request.POST)
+        
+            if reply_form.is_valid() and request.user.is_authenticated:
+                
+                reply_form.instance.author = request.user
+                reply_form.instance.post = post
+                
+                parent_id = request.POST.get('reply_form')
+                
+                parent_message = get_object_or_404(models.Message, id=parent_id)
+                
+                reply_form.instance.replies = parent_message
+                reply_form.save()
+                
+
+          
     
     post.views += 1
     post.save()
@@ -45,6 +66,7 @@ def post_detail(request, id):
     context = {
         'post':post,
         'message_form':message_form,
+        'reply_form':reply_form,
         'is_liked':is_liked
     }
     

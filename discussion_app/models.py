@@ -68,6 +68,7 @@ class Message(models.Model):
     last_modified_date = models.DateTimeField(auto_now=True)
     
     creation_date = models.DateTimeField(auto_now_add=True)
+
     
     def __str__(self):
         return self.content
@@ -80,4 +81,4 @@ class Message(models.Model):
         return False
     
     def children(self):
-        return Message.objects.filter(replies=self).reverse()
+        return Message.objects.filter(replies=self)
