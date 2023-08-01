@@ -7,7 +7,28 @@
 <div class="w-full inline-flex mt-10">
 
     <div class="w-2/5 items-center mx-5 rounded-2xl px-12 py-5 bg-blue-700 text-white">
+        <div class="pl-[420px]">
+          <form action="{% url 'discussion_app:post_like' post.id %}" method="post">
+            {% csrf_token %}
 
+            {% if is_liked %}
+              <button type="submit" class="text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current w-10 h-10">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+                <h1 class="text-white">
+                  Liked
+                </h1>                
+              </button>
+            {% else %}
+              <button type="submit" class="">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+              </button>
+            {% endif %}
+          </form>         
+        </div>
         <div class="font-semibold text-2xl break-words ">
             {{post.title}}
         </div>
@@ -58,6 +79,16 @@
     </div>
 
     <div class=" items-center mx-5 rounded-2xl px-12 py-5">
+      <div>
+        <form action="" method="post">
+          {% csrf_token %}
+
+          {{message_form.content}}
+          <br>
+          <button type="submit" class="bg-blue-500 p-4 text-xl font-semibold ml-2 rounded-xl text-white">Post</button>
+        </form>
+      </div>
+
       {% for message in post.message_post.all %}
         {% if message.is_parent %}
         <div class="pb-10">
@@ -65,7 +96,7 @@
             <img class="h-10 w-10 rounded-full object-cover " src="{{message.author.userprofile.avatar.url}}" alt="">
             <div class="inline-block">
               <div class="font-semibold text-black">
-                {{message.author}}
+                {{message.author | capfirst}}
               </div>
               <div class="font-light text-gray-400">
               {{message.creation_date}}
@@ -84,7 +115,7 @@
               <img class="h-10 w-10 rounded-full object-cover " src="{{reply.author.userprofile.avatar.url}}" alt="">
               <div class="inline-block">
                 <div class="font-semibold text-black">
-                  {{reply.author}}
+                  {{reply.author | capfirst}}
                 </div>
                 <div class="font-light text-gray-400">
                 {{reply.creation_date}}
