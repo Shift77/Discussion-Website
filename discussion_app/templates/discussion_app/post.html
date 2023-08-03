@@ -12,13 +12,10 @@
             {% csrf_token %}
 
             {% if is_liked %}
-              <button type="submit" class="text-red-600">
+              <button type="submit" class="text-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current w-10 h-10">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                </svg>
-                <h1 class="text-white">
-                  Liked
-                </h1>                
+                </svg>               
               </button>
             {% else %}
               <button type="submit" class="">
@@ -89,7 +86,7 @@
         </form>
       </div>
 
-      {% for message in post.message_post.all %}
+      {% for message in post.message_post.all|dictsortreversed:"creation_date" %}
         {% if message.is_parent %}
         <div class="pb-10">
           <div class="inline-flex gap-2">
@@ -107,7 +104,31 @@
             {{message.content}}
           </div>
         </div>  
-        
+          <div class="pl-[580px] ">
+            <form action="{% url 'discussion_app:comment_like' message.id %}" method="post">
+              {% csrf_token %}
+
+              {% if request.user in message.likes.all %}
+              <button class="text-red-500" name="comment_like" value="{{ post.id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+                <div class="text-black font-semibold">
+                  {{message.likes.count}}
+                </div>
+              </button>
+              {% else %}
+              <button class="text-black" name="comment_like" value="{{ post.id }}" >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                </svg>
+                <div class="text-black font-semibold">
+                  {{message.likes.count}}
+                </div>
+              </button>
+              {% endif %}
+            </form>
+          </div>
         <div class=" items-center rounded-2xl py-5">
           <div>
             <form action="" method="post">
@@ -137,6 +158,31 @@
             </div>
             <div class="text-black text-opacity-70 pt-3">
               {{reply.content}}
+            </div>
+            <div class="pl-[545px]">
+              <form action="{% url 'discussion_app:comment_like' reply.id %}" method="post">
+                {% csrf_token %}
+  
+                {% if request.user in reply.likes.all %}
+                <button class="text-red-500" name="comment_like" value="{{ post.id }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                  </svg>
+                  <div class="text-black font-semibold">
+                    {{reply.likes.count}}
+                  </div>
+                </button>
+                {% else %}
+                <button class="text-black" name="comment_like" value="{{ post.id }}" >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                  </svg>
+                  <div class="text-black font-semibold">
+                    {{reply.likes.count}}
+                  </div>
+                </button>
+                {% endif %}
+              </form>
             </div>
           </div>
           {% endfor %}

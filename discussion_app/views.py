@@ -84,3 +84,18 @@ def post_like(request, id):
         post.likes.add(request.user)
         
     return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
+
+@login_required
+def comment_like(request, id):
+    comment = get_object_or_404(models.Message, id=id)
+    
+    is_liked = comment.likes.filter(id=request.user.id).exists()
+    
+    if is_liked:
+        comment.likes.remove(request.user)
+    else:
+        comment.likes.add(request.user)
+        
+    post_id = request.POST.get('comment_like')    
+    
+    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(post_id)))

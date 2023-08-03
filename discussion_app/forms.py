@@ -30,6 +30,6 @@ class ReplyForm(forms.ModelForm):
         
         
     content = forms.CharField(widget=forms.Textarea(attrs={
-        'class':'h-52 w-full rounded-xl border-2 border-black text-lg p-4 mb-2',
+        'class':'h-40 w-full rounded-xl border-2 border-black text-lg p-4 mb-2',
         'placeholder':'Leave a reply . . . '
     }))
