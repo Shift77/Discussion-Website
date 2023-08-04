@@ -28,6 +28,8 @@ def post_detail(request, id):
     
     is_liked = post.likes.filter(id=request.user.id).exists()
     
+    post_saved = request.user.userprofile.saved_posts.filter(id=id).exists()
+    
     message_form = forms.MessageForm
     reply_form = forms.ReplyForm 
     
@@ -67,7 +69,8 @@ def post_detail(request, id):
         'post':post,
         'message_form':message_form,
         'reply_form':reply_form,
-        'is_liked':is_liked
+        'is_liked':is_liked,
+        'post_saved':post_saved
     }
     
     return render(request, 'discussion_app/post.html', context)
@@ -99,3 +102,19 @@ def comment_like(request, id):
     post_id = request.POST.get('comment_like')    
     
     return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(post_id)))
+
+@login_required
+def post_save(request, id):
+    post = get_object_or_404(models.Post, id=id)
+    
+    saved_posts = request.user.userprofile.saved_posts
+    
+    is_saved = saved_posts.filter(id=id).exists()
+    
+    if is_saved:
+        saved_posts.remove(post)
+        
+    else:
+        saved_posts.add(post)
+        
+    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
