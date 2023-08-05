@@ -118,3 +118,30 @@ def post_save(request, id):
         saved_posts.add(post)
         
     return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
+
+@login_required
+def create_post(request, id):    
+    
+    form = forms.CreatePostForm
+    
+    if request.method == 'POST':
+        form = forms.CreatePostForm(request.POST)
+        print(models.Category.objects.get(id=request.POST.get('category')))
+        
+        if form.is_valid():
+            print('validated!')
+            
+            f = form.save(commit=False)
+            f.author = request.user
+            # f.category = category
+            f.save()
+            
+            return HttpResponseRedirect(reverse('discussion_app:category_detail', args=str(id)))
+        else:
+            print("could'nt validate")
+    
+    context = {
+        'form':form
+    } 
+    
+    return render(request, 'discussion_app/create_post.html', context)

@@ -1,0 +1,37 @@
+
+{% extends 'core_app/base.html' %}
+
+{% block title %}Create{% endblock %}
+
+{% block content%}
+
+<div>
+
+    <div class="inline-block  mx-[450px]">
+        
+        <div class="text-[32px] font-semibold mt-10 mx-[32px] p-4 text-white bg-teal-500 text-center rounded-xl" >
+            Create a Post!
+        </div>
+        <hr class="mt-5">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="my-10">
+                <h1 class="text-xl font-semibold mb-2">Category :</h1>
+                {{form.category}}
+            </div>
+            <div class="my-10">
+                <h1 class="text-xl font-semibold mb-2">Title :</h1>
+                {{form.title}}
+            </div>
+            <div class="my-10">
+                <h1 class="text-xl font-semibold mb-2">Content :</h1>
+                {{form.content}}
+            </div>
+            <div>
+                <button class="bg-teal-400 rounded-xl font-semibold text-xl text-white p-4 ml-[150px]" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
