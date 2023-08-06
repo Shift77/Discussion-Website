@@ -1,7 +1,9 @@
 
 {% extends 'core_app/base.html' %}
 
-{% block title %}Create{% endblock %}
+{% block title %}{% if edit %}Update{% else %}Create{% endif %}{% endblock %}
+
+
 
 {% block content%}
 
@@ -10,8 +12,13 @@
     <div class="inline-block  mx-[450px]">
         
         <div class="text-[32px] font-semibold mt-10 mx-[32px] p-4 text-white bg-teal-500 text-center rounded-xl" >
-            Create a Post!
+            {% if edit %}
+                Update Your Post!
+            {% else %}
+                Create a Post!
+            {% endif %}
         </div>
+        
         <hr class="mt-5">
         <form action="" method="post">
             {% csrf_token %}

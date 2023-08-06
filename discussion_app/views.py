@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from . import models
 from . import forms
 # Create your views here.
@@ -148,7 +149,7 @@ def delete_post(request, id):
     post = get_object_or_404(models.Post, id=id)
     
     category_id = post.category.pk
-    print('delete_post test!')
+
     post.delete()
         
     return HttpResponseRedirect(reverse('discussion_app:category_detail', args=str(category_id)))
@@ -158,16 +159,25 @@ def delete_post(request, id):
 def edit_post(request, id):
     post = get_object_or_404(models.Post, id=id)
     
-    
-    print('post_edit got called!')
-    # saved_posts = request.user.userprofile.saved_posts
-    
-    # is_saved = saved_posts.filter(id=id).exists()
-    
-    # if is_saved:
-    #     saved_posts.remove(post)
+    if request.method == 'POST':
         
-    # else:
-    #     saved_posts.add(post)
+        form = forms.CreatePostForm(request.POST, instance=post)
         
-    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
+        if form.is_valid():
+            form.save()
+            
+            return redirect(reverse('discussion_app:post_detail', args=str(id)))
+
+        
+        
+    
+    form = forms.CreatePostForm(instance=post)
+   
+    edit = True
+   
+    context = {
+        'form':form,
+        'edit':edit
+    }
+    
+    return render(request, 'discussion_app/create_post.html', context)
