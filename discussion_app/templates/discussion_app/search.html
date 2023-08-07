@@ -4,12 +4,90 @@
 
 {% block content %}
 
-    <h1 class="p-20 text-xl font-semibold">search page!</h1>
 
-    {% for post in posts %}
-        <a href="{% url 'discussion_app:post_detail' post.id %}" class="hover:text-blue-300"> 
-            <h1 class="m-20 text-xl font-semibold hover:text-blue-300">{{post.title}}</h1>
-        </a>
-    {% endfor %}
+        <div class="grid grid-cols-1 mx-20 my-10">
+            <div class="flex justify-between">
+                <div class="ml-[1000px]">
+                <a href="{% url 'discussion_app:create_post' %}" class=" p-3 text-white hover:bg-blue-700 font-semibold rounded-lg bg-blue-500">
+                   <strong class="text-xl">+</strong> New Post
+                </a>
+                </div>
+            </div>
+    
+    <div class="relative overflow-x-auto mt-20">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-300">
+                <tr>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        TOPIC
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        CATEGORY
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        USERS
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        REPLIES
+                    </th>
+                    <th scope="col" class="px-6 py-3 font-medium">
+                        VIEWS
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                
+                <tr class="bg-white border-y hover:bg-gray-100 transition-all">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <a href="{% url 'discussion_app:post_detail' post.id %}" class="hover:text-blue-400">
+                        {{post.title}}
+                        </a>
+                    </th>
+                    <td class="px-8 py-4 font-medium  text-gray-900">
+                        {{post.category}}
+                    </td>
+                    <td class="px-6 py-4">
+                         
+                        <div class="flex justify-start gap-[2px]"> 
+                            {% if post.involved_users.1 > 3 %}
+    
+                                {% for user in post.involved_users.0|slice:'0:4' %}
+                                        
+                                <img class="h-10 w-10 rounded-full object-cover " src="{{user.userprofile.avatar.url}}" alt="">
+                                    
+                                {% endfor %}
+    
+                                <div class="h-11 w-11 rounded-full font-bold p-[10px]  bg-gray-200">+{{post.involved_users.1|add:'-4'}}</div>
+    
+                            {% else %}
+                                {% for user in post.involved_users.0 %}
+    
+                                <img class="h-10 w-10 rounded-full object-cover " src="{{user.userprofile.avatar.url}}" alt="">
+                                    
+                                {% endfor %}
+                            
+                            {% endif %}
+                        </div>
+                        
+                    </td>
+    
+                    <td class="px-8 py-4">
+                        {{post.message_post.count}}
+                    </td>
+                    <td class="px-8 py-4">
+                        {{post.views}}
+                    </td>
+                </tr>
+    
+                {% endfor %}
+    
+            </tbody>
+        </table>
+    </div>
+                
+        </div>
+    
+
 {% endblock %}
 

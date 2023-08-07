@@ -5,11 +5,12 @@ from discussion_app.models import Post, Category
 # Create your views here.
 
 def index(request):
-    
     categories = Category.objects.all()
+    
     
     context = {
         'categories': categories,
+       
     }
     
     return render(request, 'core_app/index.html', context)
