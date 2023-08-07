@@ -1,0 +1,15 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+    <h1 class="p-20 text-xl font-semibold">search page!</h1>
+
+    {% for post in posts %}
+        <a href="{% url 'discussion_app:post_detail' post.id %}" class="hover:text-blue-300"> 
+            <h1 class="m-20 text-xl font-semibold hover:text-blue-300">{{post.title}}</h1>
+        </a>
+    {% endfor %}
+{% endblock %}
+

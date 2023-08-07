@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from django.contrib import messages
 from . import models
 from . import forms
@@ -121,7 +122,7 @@ def post_save(request, id):
     return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
 
 @login_required
-def create_post(request, id):    
+def create_post(request):    
     
     form = forms.CreatePostForm
     
@@ -131,10 +132,9 @@ def create_post(request, id):
             
             f = form.save(commit=False)
             f.author = request.user
-            # f.category = category
             f.save()
             
-            return HttpResponseRedirect(reverse('discussion_app:category_detail', args=str(id)))
+            return HttpResponseRedirect(reverse('discussion_app:category_detail', args=str(f.category.id)))
         else:
             print("could'nt validate")
     
@@ -181,3 +181,18 @@ def edit_post(request, id):
     }
     
     return render(request, 'discussion_app/create_post.html', context)
+
+def search_posts(request):
+    search_query = request.GET.get('search')
+    print(search_query)
+    
+    if search_query:
+        posts = models.Post.objects.filter(Q(title__icontains=search_query) | Q(content__icontains=search_query))
+        
+        context = {
+            'posts':posts,
+            'search_query':search_query
+        }
+        return render(request, 'discussion_app/search.html', context)
+    else:
+        return redirect(reverse('core_app:index'))

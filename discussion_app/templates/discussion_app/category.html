@@ -13,10 +13,20 @@
             </div>
         </div>
 
-        <div class="ml-[1000px] mt-14">
-            <a href="{% url 'discussion_app:create_post' category.id %}" class=" p-3 text-white font-semibold rounded-lg bg-blue-500">
+        <div class="flex justify-between">
+            <div>
+                <button>
+                    POPULAR
+                </button>
+                <button>
+                    CATEGORIES
+                </button>
+            </div>
+            <div>
+            <a href="{% url 'discussion_app:create_post' %}" class=" p-3 text-white hover:bg-blue-700 font-semibold rounded-lg bg-blue-500">
                <strong class="text-xl">+</strong> New Post
             </a>
+            </div>
         </div>
 
 <div class="relative overflow-x-auto mt-20">
