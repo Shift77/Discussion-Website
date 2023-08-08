@@ -1,0 +1,14 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}{{request.user}}{% endblock %}
+
+{% block content %}
+<h1 class="p-10 text-xl font-semibold">{{request.user}}'s page!</h1>
+
+{% for post in posts %}
+
+<h1 class="p-10 text-xl font-semibold">{{post.title}}</h1>
+
+{% endfor %}
+
+{% endblock %}

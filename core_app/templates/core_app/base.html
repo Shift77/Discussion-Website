@@ -29,9 +29,9 @@
         <div class="col-end-12 px-4 py-2 space-x-3">
             <div class=" flex justify-center gap-3">
                 <div class="relative">
-                <button class="block h-14 w-14 focus:border-gray-200 focus:border-2 overflow-hidden focus:outline-none rounded-full shadow-lg text-center">
+                <a href="{% url 'dashboard_app:dashboard' user.id %}" class="block h-14 w-14 focus:border-gray-200 focus:border-2 overflow-hidden focus:outline-none rounded-full shadow-lg text-center">
                     <img src="{{ user.userprofile.avatar.url }}"  alt="{{user.username.0}}" class="object-cover w-full h-full text-start font-semibold bg-pink-300 text-xl">
-                </button>
+                </a>
 
                 </div>
                     <a href="{% url 'core_app:logout' %}" class="font-semibold mt-3 text-lg h-10 w-10">

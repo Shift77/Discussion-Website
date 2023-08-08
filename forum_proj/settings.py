@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core_app', #NOTE: Manually added app!
     'discussion_app', #NOTE: Manually added app!
+    'dashboard_app', #NOTE: Manually added app!
 ]
 
 MIDDLEWARE = [
