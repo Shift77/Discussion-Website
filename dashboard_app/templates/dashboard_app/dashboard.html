@@ -4,11 +4,18 @@
 
 {% block content %}
 <h1 class="p-10 text-xl font-semibold">{{request.user}}'s page!</h1>
+<div class="flex">
+    <div class="w-1/2">
+    {% for post in posts %}
 
-{% for post in posts %}
-
-<h1 class="p-10 text-xl font-semibold">{{post.title}}</h1>
-
-{% endfor %}
+    <a href="{% url 'discussion_app:post_detail' post.id %}">
+        <h1 class="m-10 hover:text-blue-500 text-xl font-semibold">{{post.title}}</h1>
+    </a>
+    {% endfor %}
+    </div>
+    <div class="w-1/2">
+        test
+    </div>
+</div>
 
 {% endblock %}

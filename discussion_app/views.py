@@ -79,6 +79,7 @@ def post_detail(request, id):
 
 @login_required
 def post_like(request, id):
+    
     post = get_object_or_404(models.Post, id=id)
     
     is_liked = post.likes.filter(id=request.user.id).exists()
@@ -88,7 +89,7 @@ def post_like(request, id):
     else:
         post.likes.add(request.user)
         
-    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
+    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=(id,)))
 
 @login_required
 def comment_like(request, id):
@@ -103,7 +104,7 @@ def comment_like(request, id):
         
     post_id = request.POST.get('comment_like')    
     
-    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(post_id)))
+    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=(post_id,)))
 
 @login_required
 def post_save(request, id):
@@ -119,7 +120,7 @@ def post_save(request, id):
     else:
         saved_posts.add(post)
         
-    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=str(id)))
+    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=(id,)))
 
 @login_required
 def create_post(request):    
@@ -166,7 +167,7 @@ def edit_post(request, id):
         if form.is_valid():
             form.save()
             
-            return redirect(reverse('discussion_app:post_detail', args=str(id)))
+            return redirect(reverse('discussion_app:post_detail', args=(id,)))
 
         
         
