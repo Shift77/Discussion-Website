@@ -6,15 +6,22 @@
 <h1 class="p-10 text-xl font-semibold">{{request.user}}'s page!</h1>
 <div class="flex">
     <div class="w-1/2">
+        <h1 class="mx-10 p-2 text-lg font-bold bg-teal-500 h-[50px] w-[124px] text-center rounded-xl text-white">Your Posts  :</h1>
     {% for post in posts %}
 
     <a href="{% url 'discussion_app:post_detail' post.id %}">
-        <h1 class="m-10 hover:text-blue-500 text-xl font-semibold">{{post.title}}</h1>
+        <h1 class="mx-12 my-4 hover:text-blue-500 text-lg font-semibold">{{post.title}}</h1>
     </a>
     {% endfor %}
     </div>
     <div class="w-1/2">
-        test
+        <h1 class="mx-10 p-2 text-lg font-bold bg-teal-500 h-[50px] w-[160px] text-center rounded-xl text-white">Favorite Posts  :</h1>
+        {% for post in saved_posts %}
+
+            <a href="{% url 'discussion_app:post_detail' post.id %}">
+                <h1 class="mx-12 my-4 hover:text-blue-500 text-lg font-semibold">{{post.title}}</h1>
+            </a>
+        {% endfor %}
     </div>
 </div>
 

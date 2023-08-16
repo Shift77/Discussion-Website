@@ -16,6 +16,24 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+
+    @property
+    def last_activity(self):
+        
+        all_posts = self.post_category.all()
+        
+        last_modified_dates = []
+        
+        
+        for post in all_posts:
+            last_modified_dates.append(post.last_modified_date)
+            
+            for message in post.message_post.all():
+                last_modified_dates.append(message.creation_date) 
+                
+        datetimes = sorted(last_modified_dates)
+             
+        return datetimes
     
 class Post(models.Model):
     
@@ -49,6 +67,7 @@ class Post(models.Model):
                 all_users.append(message.author)
                 
         return [all_users, len(all_users)]
+    
     
     
 class Message(models.Model):

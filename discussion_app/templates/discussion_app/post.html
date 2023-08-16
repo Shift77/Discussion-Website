@@ -161,7 +161,18 @@
             {{message.content}}
           </div>
         </div>  
-          <div class="pl-[580px] ">
+          <div class="pl-[500px] gap-2 flex justify-end ">
+            {% if request.user == message.author %}
+              <form action="{% url 'discussion_app:edit_comment' message.id %}">
+                {% csrf_token %}
+                <button class="bg-cyan-500 text-white p-2 rounded-xl">edit</button>
+              </form>
+              
+              <form action="{% url 'discussion_app:delete_comment' message.id %}" method="post">
+                {% csrf_token %}
+                <button class="bg-red-500 text-white p-2 rounded-xl">delete</button>
+              </form>
+            {% endif %}
             <form action="{% url 'discussion_app:comment_like' message.id %}" method="post">
               {% csrf_token %}
 
@@ -216,7 +227,18 @@
             <div class="text-black text-opacity-70 pt-3">
               {{reply.content}}
             </div>
-            <div class="pl-[545px]">
+            <div class="pl-[465px] flex gap-2 justify-end">
+              {% if request.user == reply.author %}
+                <form action="{% url 'discussion_app:edit_comment' reply.id %}">
+                  {% csrf_token %}
+                  <button class="bg-cyan-500 text-white p-2 rounded-xl">edit</button>
+                </form>
+                
+                <form action="{% url 'discussion_app:delete_comment' reply.id %}" method="post">
+                  {% csrf_token %}
+                  <button class="bg-red-500 text-white p-2 rounded-xl">delete</button>
+                </form>
+              {% endif %}
               <form action="{% url 'discussion_app:comment_like' reply.id %}" method="post">
                 {% csrf_token %}
   

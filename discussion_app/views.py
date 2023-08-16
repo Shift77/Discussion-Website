@@ -13,10 +13,6 @@ def category_detail(request, id):
     
     category = get_object_or_404(models.Category, id=id)
     
-    
-    
-    
-    
     context = {
         'category': category,
         
@@ -197,3 +193,47 @@ def search_posts(request):
         return render(request, 'discussion_app/search.html', context)
     else:
         return redirect(reverse('core_app:index'))
+    
+@login_required
+def delete_comment(request, id):
+    comment = get_object_or_404(models.Message, id=id)
+    
+    if request.user == comment.author:
+        comment.delete()
+    
+    post_id = comment.post.pk   
+    
+    return HttpResponseRedirect(reverse('discussion_app:post_detail', args=(post_id,)))
+
+@login_required
+def edit_comment(request, id):
+    
+    message = get_object_or_404(models.Message, id=id)
+    
+    message_form = forms.MessageForm(instance=message)
+    reply_form = forms.ReplyForm(instance=message)
+    
+    if request.method == 'POST':
+        
+        if 'submit_message' in request.POST:
+            message_form = forms.MessageForm(request.POST, instance=message)
+            
+            if message_form.is_valid():
+                message_form.save()
+                
+                return redirect(reverse('discussion_app:post_detail', args=(message.post.pk,)))
+        elif 'submit_reply' in request.POST:
+            reply_form = forms.ReplyForm(request.POST, instance=message)
+            
+            if reply_form.is_valid():
+                reply_form.save()
+                
+                return redirect(reverse('discussion_app:post_detail', args=(message.post.pk,)))
+    
+    context = {
+        'message_form':message_form,
+        'reply_form':reply_form,
+        'message':message,
+    }
+    
+    return render(request, 'discussion_app/edit_message.html', context)

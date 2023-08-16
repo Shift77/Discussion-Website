@@ -1,0 +1,34 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+
+<div class="">
+
+    <h1 class="bg-teal-500 text-white text-3xl rounded-xl text-center mt-10 font-semibold p-4 mx-[500px]">Edit Your Comment</h1>
+
+    
+    {% if message.is_parent %}
+        <div class="m-10">
+            <form action="" method="post">
+            {% csrf_token %}
+            {{message_form.submit_message}}
+            {{message_form.content}}
+            <br>
+            <button type="submit" class="bg-blue-500 p-6 ml-[570px] mt-4 text-2xl font-semibold rounded-xl text-white">Post</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="m-10">
+            <form action="" method="post">
+            {% csrf_token %}
+            {{reply_form.submit_reply}}
+            {{reply_form.content}}
+            <br>
+            <button type="submit" class="bg-blue-500 p-6 ml-[570px] mt-4 text-2xl font-semibold rounded-xl text-white">Post</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+  {% endblock %}
