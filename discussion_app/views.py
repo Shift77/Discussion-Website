@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Q
-from django.contrib import messages
+from django.contrib.auth.models import User
 from . import models
 from . import forms
 # Create your views here.
@@ -146,8 +146,9 @@ def delete_post(request, id):
     post = get_object_or_404(models.Post, id=id)
     
     category_id = post.category.pk
-
-    post.delete()
+    
+    if request.user == post.author or request.user.userprofile.is_moderator : 
+        post.delete()
         
     return HttpResponseRedirect(reverse('discussion_app:category_detail', args=str(category_id)))
 
@@ -237,3 +238,15 @@ def edit_comment(request, id):
     }
     
     return render(request, 'discussion_app/edit_message.html', context)
+
+@login_required
+def close_post(request, id):
+    post = get_object_or_404(models.Post, id=id)
+    
+    if request.user.userprofile.is_moderator:
+        post.is_closed = True
+        post.save()
+        
+    print(post.is_closed)
+    
+    return redirect(reverse('discussion_app:post_detail', args=(post.pk,)))

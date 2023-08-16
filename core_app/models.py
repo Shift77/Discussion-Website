@@ -14,4 +14,8 @@ class UserProfile(models.Model):
         saved_posts = models.ManyToManyField(Post, blank=True)
         
         def __str__(self):
-                return self.user.username        
+                return self.user.username
+        
+        @property
+        def is_moderator(self):
+                return self.user.groups.filter(name='Moderator').exists()        

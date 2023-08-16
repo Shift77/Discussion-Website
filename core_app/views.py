@@ -7,7 +7,6 @@ from discussion_app.models import Post, Category
 def index(request):
     categories = Category.objects.all()
     
-    print(categories[0].last_activity)
     
     context = {
         'categories': categories,
