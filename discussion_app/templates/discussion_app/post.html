@@ -155,6 +155,11 @@
               <div class="font-light text-gray-400">
               {{message.creation_date}}
               </div>
+              {% if message.edited %}
+                <div class="font-light text-gray-400 italic">
+                  ({{message.last_modified_date}} edited)
+                </div>
+              {% endif %}
             </div>
           </div>
           <div class="text-black text-opacity-70 pt-3">
@@ -222,6 +227,11 @@
                 <div class="font-light text-gray-400">
                 {{reply.creation_date}}
                 </div>
+                {% if reply.edited %}
+                  <div class="font-light text-gray-400 italic">
+                    ({{reply.last_modified_date}} edited)
+                  </div>
+                {% endif %}
               </div>
             </div>
             <div class="text-black text-opacity-70 pt-3">

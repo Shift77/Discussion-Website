@@ -96,6 +96,16 @@ class Message(models.Model):
             return True
         
         return False
-    
+    @property
     def children(self):
         return Message.objects.filter(replies=self)
+    
+    @property
+    def edited(self):
+        
+        edited = False
+        
+        if self.creation_date != self.last_modified_date:
+            edited = True
+            
+        return edited
